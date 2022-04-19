@@ -31,15 +31,36 @@ std::vector<std::string> split(const std::string &str, char d)
 std::vector<std::vector<std::string>> filter(const std::vector<std::vector<std::string>>& ip_pool)
 {
     auto _ip_pool = ip_pool;
-    for (int current_ip_pose = 0; current_ip_pose < _ip_pool.size();
-         current_ip_pose++) {
-        for (int current_ip_posee = current_ip_pose + 1;
-             current_ip_posee < _ip_pool.size();
-             current_ip_posee++) {
-            auto i = std::stoi((_ip_pool[current_ip_pose][0]));
-            auto j = std::stoi(_ip_pool[current_ip_posee][0]);
-            if (j > i) {
-                _ip_pool[current_ip_pose].swap(_ip_pool[current_ip_posee]);
+    for (int current_ip = 0; current_ip < _ip_pool.size();
+         current_ip++) {
+        for (int other_ip = current_ip + 1;
+             other_ip < _ip_pool.size();
+             other_ip++) {
+            auto current_ip_first_part = std::stoi((_ip_pool[current_ip][0]));
+            auto other_ip_first_part = std::stoi(_ip_pool[other_ip][0]);
+            if (other_ip_first_part == current_ip_first_part) {
+                auto current_ip_second_part = std::stoi((_ip_pool[current_ip][1]));
+                auto other_ip_second_part = std::stoi(_ip_pool[other_ip][1]);
+                if (other_ip_second_part == current_ip_second_part) {
+                    auto current_ip_third_part = std::stoi((_ip_pool[current_ip][2]));
+                    auto other_ip_third_part = std::stoi(_ip_pool[other_ip][2]);
+                    if (other_ip_third_part == current_ip_third_part) {
+                        auto current_ip_forth_part = std::stoi((_ip_pool[current_ip][3]));
+                        auto other_ip_forth_part = std::stoi(_ip_pool[other_ip][3]);
+                        if (other_ip_forth_part > current_ip_forth_part) {
+                            _ip_pool[current_ip].swap(_ip_pool[other_ip]);
+                        }
+                    }
+                    else if (other_ip_third_part > current_ip_third_part) {
+                        _ip_pool[current_ip].swap(_ip_pool[other_ip]);
+                    }
+                }
+                else if (other_ip_second_part > current_ip_second_part){
+                    _ip_pool[current_ip].swap(_ip_pool[other_ip]);
+                }
+            }
+            else if (other_ip_first_part > current_ip_first_part) {
+                _ip_pool[current_ip].swap(_ip_pool[other_ip]);
             }
         }
     }
